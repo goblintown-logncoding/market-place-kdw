@@ -1,7 +1,16 @@
-import { Box } from '@mui/material';
+import { Box, Stack, Button } from '@mui/material';
+import useCounterStore from '../stores/useCounterStore';
 
 const Component = () => {
-  return <Box>Component</Box>;
+  const { counter, increment } = useCounterStore();
+  return (
+    <Box>
+      <Stack>
+        {counter}
+        <Button onClick={() => increment()}>up</Button>
+      </Stack>
+    </Box>
+  );
 };
 
 export default Component;
