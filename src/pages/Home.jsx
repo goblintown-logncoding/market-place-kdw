@@ -1,10 +1,10 @@
 import { Box } from '@mui/material';
-import Product from '../components/Product';
+import ProductCard from '../components/ProductCard';
 
 function Home() {
   return (
     <Box>
-      <Product />
+      <ProductCard />
     </Box>
   );
 }

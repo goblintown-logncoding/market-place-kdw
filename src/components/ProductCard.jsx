@@ -5,8 +5,9 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
+import potato from '../assets/potato.jpg';
 
-const Product = () => {
+const ProductCard = () => {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
@@ -16,18 +17,17 @@ const Product = () => {
             Potato
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
+            $5
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
         <Button size="small" color="primary">
-          Share
+          Add to Card
         </Button>
       </CardActions>
     </Card>
   );
 };
 
-export default Product;
+export default ProductCard;
