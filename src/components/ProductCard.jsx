@@ -5,29 +5,42 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
-import potato from '../assets/potato.jpg';
+import useProductStore from '../stores/useProductStore';
+import PropTypes from 'prop-types';
 
-const ProductCard = () => {
+const ProductCard = (props) => {
+  const { add } = useProductStore();
+  const { productNumber, title, price, image } = props;
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card key={productNumber} sx={{ minWidth: 200, maxWidth: 345 }}>
       <CardActionArea>
-        <CardMedia component="img" height="140" image={potato} alt="green iguana" />
+        <CardMedia component="img" height="140" image={image} alt="green iguana" />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Potato
+            {title}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            $5
+            {price}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button
+          onClick={() => {
+            add(props);
+          }}
+          size="small"
+          color="primary"
+        >
           Add to Card
         </Button>
       </CardActions>
     </Card>
   );
+};
+
+ProductCard.propTypes = {
+  productNumber: PropTypes.string
 };
 
 export default ProductCard;
