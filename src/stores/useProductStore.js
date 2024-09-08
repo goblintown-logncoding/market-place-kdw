@@ -1,10 +1,18 @@
 import { create } from 'zustand';
 
 const useProductStore = create((set) => ({
-  productList: [],
-  add: (productObject) =>
+  productObject: {},
+  addToObject: (product) =>
     set((state) => ({
-      productList: [...state.productList, productObject]
+      productObject: {
+        ...state.productObject,
+        [product.productNumber]: {
+          ...product,
+          count: state.productObject[product.productNumber]?.count
+            ? state.productObject[product.productNumber].count + 1
+            : 1
+        }
+      }
     }))
 }));
 

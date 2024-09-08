@@ -1,4 +1,4 @@
-import { Box, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import ProductCard from '../components/ProductCard';
 import apple from '../assets/apple.jpg';
 import bananas from '../assets/bananas.jpg';
@@ -30,7 +30,13 @@ function Home() {
     <Stack flexDirection="row" gap="20px">
       {dummyProductList.map(({ productNumber, title, price, image }) => {
         return (
-          <ProductCard productNumber={productNumber} title={title} price={price} image={image} />
+          <ProductCard
+            key={productNumber}
+            productNumber={productNumber}
+            title={title}
+            price={price}
+            image={image}
+          />
         );
       })}
     </Stack>

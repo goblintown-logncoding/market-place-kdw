@@ -9,10 +9,10 @@ import useProductStore from '../stores/useProductStore';
 import PropTypes from 'prop-types';
 
 const ProductCard = (props) => {
-  const { add } = useProductStore();
-  const { productNumber, title, price, image } = props;
+  const { addToObject } = useProductStore();
+  const { title, price, image } = props;
   return (
-    <Card key={productNumber} sx={{ minWidth: 200, maxWidth: 345 }}>
+    <Card sx={{ minWidth: 200, maxWidth: 345 }}>
       <CardActionArea>
         <CardMedia component="img" height="140" image={image} alt="green iguana" />
         <CardContent>
@@ -27,7 +27,7 @@ const ProductCard = (props) => {
       <CardActions>
         <Button
           onClick={() => {
-            add(props);
+            addToObject(props);
           }}
           size="small"
           color="primary"
@@ -40,7 +40,10 @@ const ProductCard = (props) => {
 };
 
 ProductCard.propTypes = {
-  productNumber: PropTypes.string
+  productNumber: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired
 };
 
 export default ProductCard;

@@ -20,7 +20,15 @@ const drawerWidth = 240;
 function MyAppBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const { productList } = useProductStore();
+  const { productObject } = useProductStore();
+
+  const getQuantity = () => {
+    let count = 0;
+    for (const e in productObject) {
+      count += productObject[e].count ?? 0;
+    }
+    return count;
+  };
 
   const navItems = [
     {
@@ -32,7 +40,7 @@ function MyAppBar(props) {
       to: '/about'
     },
     {
-      title: `Cart (${productList.length})`,
+      title: `Cart (${getQuantity()})`,
       to: '/shopping-cart'
     }
   ];
