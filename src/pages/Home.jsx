@@ -1,40 +1,25 @@
 import { Stack } from '@mui/material';
 import ProductCard from '../components/ProductCard';
-import apple from '../assets/apple.jpg';
-import bananas from '../assets/bananas.jpg';
-import potato from '../assets/potato.jpg';
+import { useEffect, useState } from 'react';
+import { getAllDocsInProductCollection } from '../apis/firestore';
 
 function Home() {
-  const dummyProductList = [
-    {
-      productNumber: '1000',
-      title: 'Apple',
-      price: '$6',
-      image: apple
-    },
-    {
-      productNumber: '1001',
-      title: 'Bananas',
-      price: '$3',
-      image: bananas
-    },
-    {
-      productNumber: '1002',
-      title: 'Potato',
-      price: '$2',
-      image: potato
-    }
-  ];
+  const [productList, setProductList] = useState([]);
+  useEffect(() => {
+    getAllDocsInProductCollection().then((e) => {
+      setProductList(e);
+    });
+  }, []);
 
   return (
     <Stack flexDirection="row" gap="20px">
-      {dummyProductList.map(({ productNumber, title, price, image }) => {
+      {productList.map(({ productNumber, title, price, image }) => {
         return (
           <ProductCard
             key={productNumber}
             productNumber={productNumber}
             title={title}
-            price={price}
+            price={`$${price}`}
             image={image}
           />
         );
