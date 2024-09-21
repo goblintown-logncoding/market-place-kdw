@@ -7,6 +7,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardActions from '@mui/material/CardActions';
 import useProductStore from '../stores/useProductStore';
 import PropTypes from 'prop-types';
+import { setDocInShoppingCartCollection } from '../apis/firestore';
 
 const ProductCard = (props) => {
   const { addToObject } = useProductStore();
@@ -27,12 +28,17 @@ const ProductCard = (props) => {
       <CardActions>
         <Button
           onClick={() => {
-            addToObject(props);
+            /*
+            const {productNumber, title, image, price} = props
+            */
+            setDocInShoppingCartCollection(props);
+
+            //addToObject(props);
           }}
           size="small"
           color="primary"
         >
-          Add to Card
+          Add to Cart
         </Button>
       </CardActions>
     </Card>

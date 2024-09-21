@@ -1,19 +1,24 @@
 import { Box } from '@mui/material';
-import useProductStore from '../stores/useProductStore';
 import ShoppingCartItem from './ShoppingCartItem';
+import { useEffect, useState } from 'react';
+import { getAllDocsInShoppingCartCollection } from '../apis/firestore';
 
 const ShoppingCartList = () => {
-  const { productList, productObject } = useProductStore();
+  const [shoppingCartList, setShoppingCartList] = useState([]);
+  useEffect(() => {
+    getAllDocsInShoppingCartCollection().then((e) => setShoppingCartList(e));
+  }, []);
+  console.log(shoppingCartList);
   return (
     <Box>
-      {Object.keys(productObject).map((key) => {
-        const { title, image, productNumber, price, count } = productObject[key];
+      {shoppingCartList.map((obj) => {
+        const { title, image, productNumber, price, quantity } = obj;
         return (
           <ShoppingCartItem
             key={productNumber}
             title={title}
             image={image}
-            quantity={count}
+            quantity={quantity}
             price={price}
           />
         );

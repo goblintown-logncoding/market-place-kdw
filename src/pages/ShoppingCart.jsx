@@ -7,12 +7,9 @@ import {
   Stack,
   Typography
 } from '@mui/material';
-import useProductStore from '../stores/useProductStore';
 import ShoppingCartList from '../components/ShoppingCartList';
 
 const ShoppingCart = () => {
-  const { productObject } = useProductStore();
-  console.log(productObject);
   return (
     <Container>
       <Card sx={{ minWidth: '700px' }}>
