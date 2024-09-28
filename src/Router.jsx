@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import ShoppingCart from './pages/ShoppingCart';
 import MyAppBar from './components/MyAppBar';
+import ProductDetail from './pages/ProductDetailPage';
 
 const Router = () => {
   return (
@@ -12,6 +13,7 @@ const Router = () => {
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="shopping-cart" element={<ShoppingCart />} />
+          <Route path="product-detail/:id" element={<ProductDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>

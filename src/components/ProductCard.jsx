@@ -8,13 +8,19 @@ import CardActions from '@mui/material/CardActions';
 import useProductStore from '../stores/useProductStore';
 import PropTypes from 'prop-types';
 import { setDocInShoppingCartCollection } from '../apis/firestore';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = (props) => {
   const { addToObject } = useProductStore();
-  const { title, price, image } = props;
+  const { productNumber, title, price, image } = props;
+  const navigate = useNavigate();
   return (
     <Card sx={{ minWidth: 200, maxWidth: 345 }}>
-      <CardActionArea>
+      <CardActionArea
+        onClick={() => {
+          navigate('/product-detail/' + productNumber);
+        }}
+      >
         <CardMedia component="img" height="140" image={image} alt="green iguana" />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
