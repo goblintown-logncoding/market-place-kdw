@@ -1,6 +1,8 @@
 import { collection, getDocs, setDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
+export const updateQuantityByProductNumber = async () => {};
+
 export const getAllDocsInProductCollection = async () => {
   const querySnapshot = await getDocs(collection(db, 'product'));
   return querySnapshot.docs.map((snapshot) => snapshot.data());
