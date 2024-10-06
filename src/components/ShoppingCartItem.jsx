@@ -13,16 +13,27 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { deleteProduct, updateQuantityByProductNumber } from '../apis/firestore';
 
-const ShoppingCartItem = ({ image, title, price, quantity }) => {
+const ShoppingCartItem = ({ image, title, price, quantity, productNumber }) => {
   const [selectQuantity, setSelectQuantity] = useState(quantity);
+  const [textFieldQuantity, setTextFieldQuantity] = useState();
   const [isUpdated, setIsUpdated] = useState(false);
 
+  const handleTextFieldChange = (e) => {
+    setTextFieldQuantity(e.target.value);
+  };
+
   const handleChange = (e) => {
+    updateQuantityByProductNumber(productNumber, e.target.value);
     setSelectQuantity(e.target.value);
   };
 
   const handleUpdate = () => {
+    updateQuantityByProductNumber(productNumber, textFieldQuantity);
+    if (textFieldQuantity <= 10) {
+      setSelectQuantity(textFieldQuantity);
+    }
     setIsUpdated(true);
   };
 
@@ -63,6 +74,8 @@ const ShoppingCartItem = ({ image, title, price, quantity }) => {
                       label="Qty"
                       variant="outlined"
                       onFocus={handleFocus}
+                      onChange={handleTextFieldChange}
+                      value={textFieldQuantity}
                     />
                     {isUpdated || <Button onClick={handleUpdate}>Update</Button>}
                   </Stack>
@@ -93,7 +106,13 @@ const ShoppingCartItem = ({ image, title, price, quantity }) => {
                   </FormControl>
                 )}
               </Box>
-              <Button>Delete</Button>
+              <Button
+                onClick={() => {
+                  deleteProduct(productNumber);
+                }}
+              >
+                Delete
+              </Button>
             </Stack>
           </Stack>
         </Stack>

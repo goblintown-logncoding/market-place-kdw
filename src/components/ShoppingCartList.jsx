@@ -20,6 +20,7 @@ const ShoppingCartList = () => {
             image={image}
             quantity={quantity}
             price={price}
+            productNumber={productNumber}
           />
         );
       })}

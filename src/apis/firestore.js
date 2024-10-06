@@ -1,7 +1,16 @@
-import { collection, getDocs, setDoc, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, setDoc, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
-export const updateQuantityByProductNumber = async () => {};
+export const deleteProduct = async (productNumber) => {
+  deleteDoc(doc(db, 'shopping-cart', productNumber));
+};
+
+export const updateQuantityByProductNumber = async (productNumber, quantity) => {
+  const productRef = doc(db, 'shopping-cart', productNumber);
+  updateDoc(productRef, { quantity }).catch((err) => {
+    console.error('Error updating document ' + err);
+  });
+};
 
 export const getAllDocsInProductCollection = async () => {
   const querySnapshot = await getDocs(collection(db, 'product'));
