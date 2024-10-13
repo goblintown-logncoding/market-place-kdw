@@ -14,11 +14,13 @@ import {
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { deleteProduct, updateQuantityByProductNumber } from '../apis/firestore';
+import { useQueryClient } from '@tanstack/react-query';
 
 const ShoppingCartItem = ({ image, title, price, quantity, productNumber }) => {
   const [selectQuantity, setSelectQuantity] = useState(quantity);
   const [textFieldQuantity, setTextFieldQuantity] = useState();
   const [isUpdated, setIsUpdated] = useState(false);
+  const queryClient = useQueryClient();
 
   const handleTextFieldChange = (e) => {
     setTextFieldQuantity(e.target.value);
@@ -109,6 +111,8 @@ const ShoppingCartItem = ({ image, title, price, quantity, productNumber }) => {
               <Button
                 onClick={() => {
                   deleteProduct(productNumber);
+                  // Todo
+                  queryClient.invalidateQueries({ queryKey: ['shoppingCartList'] });
                 }}
               >
                 Delete
