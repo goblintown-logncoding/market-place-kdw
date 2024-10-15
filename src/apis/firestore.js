@@ -12,10 +12,7 @@ export const updateQuantityByProductNumber = async (productNumber, quantity) => 
   });
 };
 
-export const getAllDocsInProductCollection = async () => {
-  const querySnapshot = await getDocs(collection(db, 'product'));
-  return querySnapshot.docs.map((snapshot) => snapshot.data());
-};
+export const getAllDocsInProductCollection = async () => {};
 
 export const getAllDocsInShoppingCartCollection = async () => {
   const querySnapshot = await getDocs(collection(db, 'shopping-cart'));
