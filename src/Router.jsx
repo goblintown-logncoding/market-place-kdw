@@ -4,6 +4,7 @@ import About from './pages/About';
 import ShoppingCart from './pages/ShoppingCart';
 import MyAppBar from './components/MyAppBar';
 import ProductDetail from './pages/ProductDetailPage';
+import Admin from './pages/Admin';
 
 const Router = () => {
   return (
@@ -12,6 +13,7 @@ const Router = () => {
         <Route path="/" element={<MyAppBar />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
+          <Route path="admin" element={<Admin />} />
           <Route path="shopping-cart" element={<ShoppingCart />} />
           <Route path="product-detail/:id" element={<ProductDetail />} />
         </Route>

@@ -42,6 +42,10 @@ function MyAppBar(props) {
     {
       title: `Cart (${getQuantity()})`,
       to: '/shopping-cart'
+    },
+    {
+      title: `Admin`,
+      to: '/admin'
     }
   ];
 
