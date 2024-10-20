@@ -36,3 +36,7 @@ export const setDocInShoppingCartCollection = async (productInfo) => {
     quantity
   });
 };
+
+export const addProduct = async () => {
+  // Todo: Implement adding product to firebase using "addDoc"
+};

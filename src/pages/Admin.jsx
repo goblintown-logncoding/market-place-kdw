@@ -11,25 +11,18 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useRef } from 'react';
-
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1
-});
+import { useMutation } from '@tanstack/react-query';
+import { addProduct } from '../apis/firestore';
+import ImageUploadButton from '../components/ImageUploadButton';
 
 const Admin = () => {
   const productNameRef = useRef();
   const priceRef = useRef();
   const descriptionRef = useRef();
+  const mutation = useMutation({
+    mutationFn: addProduct
+  });
 
   return (
     <Container>
@@ -56,27 +49,14 @@ const Admin = () => {
               minRows={5}
               ref={descriptionRef}
             />
-            <Button
-              component="label"
-              role={undefined}
-              variant="contained"
-              tabIndex={-1}
-              startIcon={<CloudUploadIcon />}
-            >
-              Select Product Image
-              <VisuallyHiddenInput
-                type="file"
-                onChange={(event) => console.log(event.target.files)}
-                multiple
-              />
-            </Button>
+            <ImageUploadButton />
           </Stack>
           <Box marginTop="20px">
             <Button
               onClick={() => {
-                console.log(productNameRef.current.value);
-                console.log(priceRef.current.value);
-                console.log(descriptionRef.current.value);
+                console.log(productNameRef.current.value); // title
+                console.log(priceRef.current.value); // price
+                console.log(descriptionRef.current.value); // description
               }}
             >
               Upload
