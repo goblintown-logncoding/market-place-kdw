@@ -16,9 +16,8 @@ const VisuallyHiddenInput = styled('input')({
   width: 1
 });
 
-const ImageUploadButton = () => {
+const ImageUploadButton = ({ setImageUrl }) => {
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [imageUrl, setImageUrl] = useState('');
 
   const handleUpload = (file) => {
     if (!file) return;

@@ -1,4 +1,13 @@
-import { collection, getDocs, setDoc, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  setDoc,
+  doc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  addDoc
+} from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
 export const deleteProduct = async (productNumber) => {
@@ -37,6 +46,7 @@ export const setDocInShoppingCartCollection = async (productInfo) => {
   });
 };
 
-export const addProduct = async () => {
+export const addProduct = async (params) => {
   // Todo: Implement adding product to firebase using "addDoc"
+  await addDoc(collection(db, 'product'), params);
 };

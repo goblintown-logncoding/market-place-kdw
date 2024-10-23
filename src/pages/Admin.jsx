@@ -11,7 +11,7 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { addProduct } from '../apis/firestore';
 import ImageUploadButton from '../components/ImageUploadButton';
@@ -20,6 +20,7 @@ const Admin = () => {
   const productNameRef = useRef();
   const priceRef = useRef();
   const descriptionRef = useRef();
+  const [imageUrl, setImageUrl] = useState('');
   const mutation = useMutation({
     mutationFn: addProduct
   });
@@ -49,7 +50,7 @@ const Admin = () => {
               minRows={5}
               ref={descriptionRef}
             />
-            <ImageUploadButton />
+            <ImageUploadButton setImageUrl={setImageUrl} />
           </Stack>
           <Box marginTop="20px">
             <Button
@@ -57,6 +58,13 @@ const Admin = () => {
                 console.log(productNameRef.current.value); // title
                 console.log(priceRef.current.value); // price
                 console.log(descriptionRef.current.value); // description
+                const payload = {
+                  title: productNameRef.current.value,
+                  price: priceRef.current.value,
+                  description: descriptionRef.current.value,
+                  image: imageUrl
+                };
+                mutation.mutate(payload);
               }}
             >
               Upload
