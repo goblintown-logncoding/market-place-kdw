@@ -14,25 +14,31 @@ import {
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { deleteProduct, updateQuantityByProductNumber } from '../apis/firestore';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const ShoppingCartItem = ({ image, title, price, quantity, productNumber }) => {
   const [selectQuantity, setSelectQuantity] = useState(quantity);
   const [textFieldQuantity, setTextFieldQuantity] = useState();
   const [isUpdated, setIsUpdated] = useState(false);
   const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: updateQuantityByProductNumber,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['quantity'] });
+    }
+  });
 
   const handleTextFieldChange = (e) => {
     setTextFieldQuantity(e.target.value);
   };
 
   const handleChange = (e) => {
-    updateQuantityByProductNumber(productNumber, e.target.value);
+    mutation.mutate({ productNumber, quantity: e.target.value });
     setSelectQuantity(e.target.value);
   };
 
   const handleUpdate = () => {
-    updateQuantityByProductNumber(productNumber, textFieldQuantity);
+    mutation.mutate({ productNumber, quantity: textFieldQuantity });
     if (textFieldQuantity <= 10) {
       setSelectQuantity(textFieldQuantity);
     }

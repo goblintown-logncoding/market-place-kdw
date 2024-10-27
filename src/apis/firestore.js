@@ -14,7 +14,7 @@ export const deleteProduct = async (productNumber) => {
   deleteDoc(doc(db, 'shopping-cart', productNumber));
 };
 
-export const updateQuantityByProductNumber = async (productNumber, quantity) => {
+export const updateQuantityByProductNumber = async ({ productNumber, quantity }) => {
   const productRef = doc(db, 'shopping-cart', productNumber);
   updateDoc(productRef, { quantity }).catch((err) => {
     console.error('Error updating document ' + err);
