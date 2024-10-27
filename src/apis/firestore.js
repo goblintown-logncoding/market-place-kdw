@@ -31,6 +31,17 @@ export const getAllDocsInShoppingCartCollection = async () => {
   return querySnapshot.docs.map((snapshot) => snapshot.data());
 };
 
+export const getQuantity = async () => {
+  const querySnapshot = await getDocs(collection(db, 'shopping-cart'));
+  let counter = 0;
+  querySnapshot.docs
+    .map((snapshot) => snapshot.data())
+    .forEach((e) => {
+      counter += e.quantity;
+    });
+  return counter;
+};
+
 export const setDocInShoppingCartCollection = async (productInfo) => {
   const productNumber = productInfo.productNumber;
   const productRef = doc(db, 'shopping-cart', productNumber);

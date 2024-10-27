@@ -15,20 +15,17 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Link, Outlet } from 'react-router-dom';
 import useProductStore from '../stores/useProductStore';
+import { useQuery } from '@tanstack/react-query';
+import { getQuantity } from '../apis/firestore';
 
 const drawerWidth = 240;
 function MyAppBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const { productObject } = useProductStore();
-
-  const getQuantity = () => {
-    let count = 0;
-    for (const e in productObject) {
-      count += productObject[e].count ?? 0;
-    }
-    return count;
-  };
+  const { data } = useQuery({
+    queryKey: ['quantity'],
+    queryFn: getQuantity
+  });
 
   const navItems = [
     {
@@ -40,7 +37,7 @@ function MyAppBar(props) {
       to: '/about'
     },
     {
-      title: `Cart (${getQuantity()})`,
+      title: `Cart (${data})`,
       to: '/shopping-cart'
     },
     {
