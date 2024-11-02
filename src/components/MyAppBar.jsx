@@ -17,6 +17,10 @@ import { Link, Outlet } from 'react-router-dom';
 import useProductStore from '../stores/useProductStore';
 import { useQuery } from '@tanstack/react-query';
 import { getQuantity } from '../apis/firestore';
+import { Menu, MenuItem } from '@mui/material';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import { signInWithPopup } from 'firebase/auth';
+import { provider, auth as googleAuth } from '../firebaseConfig';
 
 const drawerWidth = 240;
 function MyAppBar(props) {
@@ -26,6 +30,33 @@ function MyAppBar(props) {
     queryKey: ['quantity'],
     queryFn: getQuantity
   });
+  const [auth, setAuth] = React.useState(true);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [user, setUser] = React.useState();
+
+  const handleChange = (event) => {
+    setAuth(event.target.checked);
+  };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const signInWithGoogle = () => {
+    signInWithPopup(googleAuth, provider)
+      .then((result) => {
+        console.log(result);
+        const googleUser = result.user;
+        setUser(googleUser);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   const navItems = [
     {
@@ -57,15 +88,17 @@ function MyAppBar(props) {
       </Typography>
       <Divider />
       <List>
-        {navItems.map(({ title, to }) => (
-          <ListItem key={title} disablePadding>
-            <Link to={to}>
-              <ListItemButton sx={{ textAlign: 'center' }}>
-                <ListItemText primary={title} />
-              </ListItemButton>
-            </Link>
-          </ListItem>
-        ))}
+        {navItems.map(({ title, to }) => {
+          return (
+            <ListItem key={title} disablePadding>
+              <Link to={to}>
+                <ListItemButton sx={{ textAlign: 'center' }}>
+                  <ListItemText primary={title} />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+          );
+        })}
       </List>
     </Box>
   );
@@ -100,7 +133,48 @@ function MyAppBar(props) {
                 </Button>
               </Link>
             ))}
+            {user ? null : (
+              <Button
+                key={'w'}
+                sx={{ color: '#fff' }}
+                onClick={() => {
+                  signInWithGoogle();
+                }}
+              >
+                Login
+              </Button>
+            )}
           </Box>
+
+          <div>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Logout</MenuItem>
+            </Menu>
+          </div>
         </Toolbar>
       </AppBar>
       <nav>
